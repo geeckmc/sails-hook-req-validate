@@ -5,7 +5,7 @@
 
 module.exports = function(req, res){
 
-  var alpha = req.validator({alpha: 'alphanumeric'});
+  var alpha = req.validate({alpha: 'alphanumeric'});
 
   if(alpha) return res.ok(alpha);
 

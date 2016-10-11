@@ -5,7 +5,7 @@
 
 module.exports = function(req, res, next){
 
-  var param = req.validator({height: 'float'});
+  var param = req.validate({height: 'float'});
 
   if(param) return res.ok(param);
 

@@ -5,7 +5,7 @@
 
 module.exports = function(req, res, next){
 
-  var param = req.validator({id: 'int'});
+  var param = req.validate({id: 'int'});
 
   if(param) return res.ok(param);
 

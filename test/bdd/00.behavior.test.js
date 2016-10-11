@@ -577,6 +577,7 @@ describe('00 BehaviorController Test', function(){
       url: '/some-optional-parameters',
       method: 'post'
     }, params, function(err, res, body){
+
       if(err) return done(err);
       res.statusCode.should.be.equal(200);
       body.should.be.instanceOf(Object);

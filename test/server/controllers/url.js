@@ -5,7 +5,7 @@
 
 module.exports = function(req, res){
 
-  var url = req.validator({url: 'url'});
+  var url = req.validate({url: 'url'});
 
   if(url) return res.ok(url);
 

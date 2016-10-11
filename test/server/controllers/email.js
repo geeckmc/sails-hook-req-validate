@@ -6,12 +6,12 @@
 module.exports = {
 
   index: function(req, res){
-    var email = req.validator({email: 'email'});
+    var email = req.validate({email: 'email'});
     if(email) return res.ok(email);
   },
 
   googleEmail: function(req, res){
-    var googleEmail = req.validator({email: 'toEmail'});
+    var googleEmail = req.validate({email: 'toEmail'});
     if(googleEmail) return res.ok(googleEmail);
   }
 

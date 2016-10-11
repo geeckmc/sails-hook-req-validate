@@ -1,4 +1,4 @@
-var validator = require('./lib/');
+var validate = require('./lib/');
 
 module.exports = function(sails) {
 
@@ -8,7 +8,7 @@ module.exports = function(sails) {
 
       sails.on('router:route', function(requestState) {
 
-        requestState.req['validator'] = validator.bind(requestState);
+        requestState.req['validate'] = validate.bind(requestState);
 
       });
 

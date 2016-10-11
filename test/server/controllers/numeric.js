@@ -5,7 +5,7 @@
 
 module.exports = function(req, res){
 
-  var numeric = req.validator({numeric: 'numeric'});
+  var numeric = req.validate({numeric: 'numeric'});
 
   if(numeric) return res.ok(numeric);
 
