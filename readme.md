@@ -1,14 +1,14 @@
-# sails-hook-req-validator
+# sails-hook-req-validate
 
 [![Build Status](https://travis-ci.org/Josebaseba/sails-hook-validator.svg?branch=master)](https://travis-ci.org/Josebaseba/sails-hook-validator)
 
-Sails hook for validate request.
+Sails hook for overwrite req.validate request.
 
 ```javascript
   npm install --save sails-hook-validator
 ```
 
-###req.validator();
+###req.validate();
 
 > ######Requirements:
 Sails v0.11.X and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
@@ -18,7 +18,7 @@ If something goes wrong it return a 400 to the user with the error, if it goes o
 ```javascript
   // req.params.all() === {name: 'joseba', surname: 'legarreta'}
 
-  var param = req.validator('name');
+  var param = reg.validate('name');
 
   // param === {name: 'joseba'}
 
@@ -26,7 +26,7 @@ If something goes wrong it return a 400 to the user with the error, if it goes o
   // For more that one params the required params have to go in an Array
   // req.params.all() === {id: 1, name: 'joseba'}
 
-  var params = req.validator(['id', 'password']);
+  var params = reg.validate(['id', 'password']);
 
   // params === false && the client has a 400 - password is required
   // so we end the controller execution
@@ -39,7 +39,7 @@ If something goes wrong it return a 400 to the user with the error, if it goes o
 
   // Not sending the default 400 code with error text
   // Just set the second params as false.
-  var params = req.validator(['nickname', 'email', 'password', '?name'], false);
+  var params = reg.validate(['nickname', 'email', 'password', '?name'], false);
 
   // In case of error params === false else the params will be an object with values
 
@@ -51,7 +51,7 @@ If something goes wrong it return a 400 to the user with the error, if it goes o
     'id', '?name',
     {'?surname': ['string', 'toUpper'], height: 'float', '?age': 'int'}
   ];
-  req.validator(filter, false, function(err, params){
+  reg.validate(filter, false, function(err, params){
     // err === {message: 'parsedError...', invalidParameters: ['invalid', 'parameter', 'list']}
     if(err) return res.badRequest(err.message);
     return res.ok(params);
@@ -63,43 +63,43 @@ If something goes wrong it return a 400 to the user with the error, if it goes o
     'id', '?name',
     {'?surname': ['string', 'toUpper'], height: 'float', '?age': 'int'}
   ];
-  req.validator(filter, function(err, params){ // If error the validator will send the req.400
+  reg.validate(filter, function(err, params){ // If error the validator will send the req.400
     if(params) return res.ok(params);
   });
 
 ```
 
-If we want to check the type we can ask for it, for example: int, email, boolean, float... req.validator checks if it is the type that we are looking for or if it's posible to convert to the type that we want (ex: 'upper' check if is upperCase text, 'toUpper' upperCase the text if the value is a string, if it couldn't upperCase it the client will get an 400).
+If we want to check the type we can ask for it, for example: int, email, boolean, float... reg.validate checks if it is the type that we are looking for or if it's posible to convert to the type that we want (ex: 'upper' check if is upperCase text, 'toUpper' upperCase the text if the value is a string, if it couldn't upperCase it the client will get an 400).
 
 If it can't convert or the types doesn't match, it will send the 400 error to the client. Example:
 
 ```javascript
 
   // req.params.all() === {id: 1, likes: '12.20', url: 'HttP://GOOGLE.eS', email: 'JOSEBA@gMaiL.com'}
-  var params = req.validator(['id', {likes: 'int', url: ['url', 'toLower'], email: 'email'}]);
+  var params = reg.validate(['id', {likes: 'int', url: ['url', 'toLower'], email: 'email'}]);
   // params = {id: 1, likes: 12, url: 'http://google.es', email: 'joseba@gmail.com'}
 
   // MORE EXAMPLES
 
   // req.params.all() === {id: 1, likes: '12.20', url: 'http://google.es', email: 'JOSEBA@gMaiL.com'}
-  var params = req.validator(['id', 'url', {likes: 'float', email: 'email'}]);
+  var params = reg.validate(['id', 'url', {likes: 'float', email: 'email'}]);
   // params = {id: 1, likes: 12.20, url: 'http://google.es', email: 'joseba@gmail.com'}
 
   // MORE
 
   // req.params.all() === {id: 1, likes: 'hello', url: 'http://google.es', email: 'JOSEBA@gMaiL.com'}
-  var params = req.validator(['id', {url: ['url', 'lower'], likes: 'float', email: 'email'}]);
+  var params = reg.validate(['id', {url: ['url', 'lower'], likes: 'float', email: 'email'}]);
   // params === false and the client gets a res 400 - 'likes' has to be a float
 
   // More examples
 
-  var param = req.validator({color: ['hexcolor', 'upper']});
+  var param = reg.validate({color: ['hexcolor', 'upper']});
 
   // More examples
 
   // Optional values
 
-  var param = req.validator('?nickname', {color: ['hexcolor', 'upper'], '?name': 'toUpper'});
+  var param = reg.validate('nickname?', {color: ['hexcolor', 'upper'], 'name?': 'toUpper'});
 
   // If we have a nickname and/or a name parameters it will return it to the param var applying the rules
   // If nickname or/and name are undefined in the request, it will ignore them and won't send 400
@@ -138,25 +138,9 @@ If it can't convert or the types doesn't match, it will send the 400 error to th
 
 #### Sails v0.10.X
 
-To work with req.validator() in v0.10 just clone this repo inside of api/hooks folder. <b>Not tested yet in v0.10!</b> But it should work with no problem...
+To work with reg.validate() in v0.10 just clone this repo inside of api/hooks folder. <b>Not tested yet in v0.10!</b> But it should work with no problem...
 
-## TO-DO
 
-###### I'm working on it, I've to finish the some refactorization, comments in code, adding tests and docs.
-
-- [x] Create basic usage of hook and check if it works
-
-- [x] Publish in npm to test working in a sails application
-
-- [x] Add the optional parameter option, with an '?' after the param name ('?surname')
-
-- [x] Add the option of not sending the 400 default error
-
-- [ ] Finish the tests
-
-- [ ] Publish the 0.11.1 version
-
-- [ ] Test it with sails 0.10
 
 ## Tests
 
