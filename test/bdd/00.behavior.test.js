@@ -885,7 +885,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal('Custom shit');
+      err.body.should.be.equal('Custom output');
       return done();
     });
   });
@@ -904,7 +904,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal('Custom shit');
+      err.body.should.be.equal('Custom output');
       return done();
     });
   });
@@ -922,7 +922,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal('Custom shit');
+      err.body.should.be.equal('Custom output');
       return done();
     });
   });
@@ -940,7 +940,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal('Custom shit');
+      err.body.should.be.equal('Custom output');
       return done();
     });
   });

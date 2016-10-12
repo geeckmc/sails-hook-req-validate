@@ -130,7 +130,7 @@ module.exports = {
       {'surname?': ['string', 'toUppercase'], height: 'float', 'age?': 'int'}
     ];
     var params = req.validate(filter, false);
-    if(params) return res.ok(params); else return res.badRequest('Custom shit');
+    if(params) return res.ok(params); else return res.badRequest('Custom output');
   },
 
   complexNoErrorResponseAsync: function(req, res){
@@ -139,7 +139,7 @@ module.exports = {
       {'surname?': ['string', 'toUppercase'], height: 'float', 'age?': 'int'}
     ];
     req.validate(filter, false, function(err, params){
-      if(err) return res.badRequest('Custom shit');
+      if(err) return res.badRequest('Custom output');
       return res.ok(params);
     });
   },
