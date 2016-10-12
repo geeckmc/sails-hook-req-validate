@@ -10,7 +10,7 @@ Sails hook for overwrite req.validate request.
 
 ###req.validate();
 
-> ######Requirements:
+> #####Requirements:
 Sails v0.11.X and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
 This project is originally forked from sails-hook-validator with following modifications:
 
@@ -20,6 +20,7 @@ This project is originally forked from sails-hook-validator with following modif
 > * changed the error respond from `res.error(400, data)` to `res.badRequest(data)`
 
 <br>
+
 ###Simple Single & Multple Parameter(s)
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing.
 
