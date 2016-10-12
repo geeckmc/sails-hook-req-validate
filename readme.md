@@ -52,6 +52,7 @@ console.log(params);               // {id: 1234, firstname: "John", lastname: "D
 NOTE: For an optional parameter, just add `?` at the end of the passing parameter key.
 
 <br>
+
 ###Multple Parameters with TYPE filters
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
@@ -67,6 +68,7 @@ console.log(params);               // {id: 1234, firstname: "John", lastname: "D
 See [Validation Filters](#validation_filters) for more information.
 
 <br>
+
 ###Multple Parameters with TYPE filters & CONVERTION filters
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
@@ -84,6 +86,7 @@ NOTE: All CONVERTION filters start with `to`, for example: toUppercase, toBoolea
 See [Validation Filters](#validation_filters) and [Conversion Filters](#conversion_filters) for more information.
 
 <br>
+
 ###- Additional Example (Combining All Above Examples in One) 
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
@@ -99,6 +102,7 @@ var params = req.validate([
 See [Validation Filters](#validation_filters) and [Conversion Filters](#conversion_filters) for more information.
 
 <br>
+
 ###Disable Default Error Response  
 When the validation fails, `res.badRequest` will not be sent instead 'false' will be returned.
 
@@ -115,6 +119,7 @@ if (params) {
 NOTE: To disable the default error response, set `false` as the second passing variable.
 
 <br>
+
 ###Custom Validation Callback 
 
 ```javascript
@@ -132,6 +137,7 @@ var params = req.validate(
 NOTE: To set a custom callback, set function callback as the second passing variable.
 
 <br>
+
 ###<a name="validation_filters"></a>Validation Filters
 
 ```javascript  
@@ -158,6 +164,7 @@ NOTE: To set a custom callback, set function callback as the second passing vari
 ```
 
 <br>
+
 ###<a name="conversion_filters"></a>Conversion Filters
 
 ```javascript  
@@ -167,11 +174,8 @@ NOTE: To set a custom callback, set function callback as the second passing vari
   toBoolean
   toDate
 ```
-  
-  
-  
-
 
 <br>
+
 #### Sails v0.10.x
 To work with reg.validate() in v0.10 just clone this repo inside of api/hooks folder.
