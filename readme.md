@@ -1,4 +1,4 @@
-# sails-hook-validate
+# sails-hook-req-validate
 
 [![Build Status](https://travis-ci.org/Josebaseba/sails-hook-validator.svg?branch=master)](https://travis-ci.org/Josebaseba/sails-hook-validator)
 

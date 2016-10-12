@@ -1,5 +1,5 @@
 {
-  "name": "sails-hook-validation",
+  "name": "sails-hook-req-validate",
   "version": "0.1.0",
   "description": "Validations in Sailsjs requests",
   "keywords": [
@@ -25,7 +25,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com:JohnKimDev/sails-hook-validation.git"
+    "url": "git://github.com:JohnKimDev/sails-hook-req-validate.git"
   },
   "sails": {
     "isHook": true
@@ -35,9 +35,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JohnKimDev/sails-hook-validation/issues"
+    "url": "https://github.com/JohnKimDev/sails-hook-req-validate/issues"
   },
-  "homepage": "https://github.com/JohnKimDev/sails-hook-validation",
+  "homepage": "https://github.com/JohnKimDev/sails-hook-req-validate",
   "scripts": {
     "test": "mocha"
   }
