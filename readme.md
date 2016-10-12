@@ -1,6 +1,6 @@
 # sails-hook-req-validate
 
-[![Build Status](https://travis-ci.org/JohnKimDev/sails-hook-req-validate.svg?branch=master)](https://travis-ci.org/JohnKimDev/sails-hook-req-validate)
+[![Build Status](https://travis-ci.org/JohnKimDev/sails-hook-req-validate.svg?branch=master)](https://travis-ci.org/JohnKimDev/sails-hook-req-validate) 
 
 Sails hook for overwrite req.validate request.
 
