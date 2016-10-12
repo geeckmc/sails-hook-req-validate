@@ -1,163 +1,177 @@
-# sails-hook-req-validate
+# sails-hook-validate
 
 [![Build Status](https://travis-ci.org/Josebaseba/sails-hook-validator.svg?branch=master)](https://travis-ci.org/Josebaseba/sails-hook-validator)
 
 Sails hook for overwrite req.validate request.
 
 ```javascript
-  npm install --save sails-hook-validator
+  npm install --save sails-hook-validate
 ```
 
 ###req.validate();
 
 > ######Requirements:
 Sails v0.11.X and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
+This project is originally forked from sails-hook-validator with following modifications:
 
-If something goes wrong it return a 400 to the user with the error, if it goes ok it returns the params. It works as a filter too, for example if the client sends name and surname but we only want to work with the name:
+> * rather then creating a new validation function, it overwrites the existing `req.validate` function
+> * changed the optional field marker `?` to be the surffix (ex: name?)
+> * updated the filter names
+> * changed the error respond from `res.error(400, data)` to `res.badRequest(data)`
 
-```javascript
-  // req.params.all() === {name: 'joseba', surname: 'legarreta'}
-
-  var param = reg.validate('name');
-
-  // param === {name: 'joseba'}
-
-  // MORE EXAMPLES
-  // For more that one params the required params have to go in an Array
-  // req.params.all() === {id: 1, name: 'joseba'}
-
-  var params = reg.validate(['id', 'password']);
-
-  // params === false && the client has a 400 - password is required
-  // so we end the controller execution
-
-  if(!params) return null;
-  // If we have params continue the logic
-  User.update(params.id, params).exec(function(){}); //...
-
-  // MORE STUFF
-
-  // Not sending the default 400 code with error text
-  // Just set the second params as false.
-  var params = reg.validate(['nickname', 'email', 'password', '?name'], false);
-
-  // In case of error params === false else the params will be an object with values
-
-  if(params) return res.ok(); else return res.badRequest('Custom message');
-
-  // ASYNC WAY GET ERROR AND PARAMS
-
-  var filter = [
-    'id', '?name',
-    {'?surname': ['string', 'toUpper'], height: 'float', '?age': 'int'}
-  ];
-  reg.validate(filter, false, function(err, params){
-    // err === {message: 'parsedError...', invalidParameters: ['invalid', 'parameter', 'list']}
-    if(err) return res.badRequest(err.message);
-    return res.ok(params);
-  });
-
-  // OR
-
-  var filter = [
-    'id', '?name',
-    {'?surname': ['string', 'toUpper'], height: 'float', '?age': 'int'}
-  ];
-  reg.validate(filter, function(err, params){ // If error the validator will send the req.400
-    if(params) return res.ok(params);
-  });
-
-```
-
-If we want to check the type we can ask for it, for example: int, email, boolean, float... reg.validate checks if it is the type that we are looking for or if it's posible to convert to the type that we want (ex: 'upper' check if is upperCase text, 'toUpper' upperCase the text if the value is a string, if it couldn't upperCase it the client will get an 400).
-
-If it can't convert or the types doesn't match, it will send the 400 error to the client. Example:
+<br>
+###Simple Single & Multple Parameter(s)
+Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing.
 
 ```javascript
+var params = req.validate('id');
+// if the validation fails, "req.badRequest" will be called and will not continue to the next line.  
+console.log(params);                // {id: 1234}
+```
+<br>
 
-  // req.params.all() === {id: 1, likes: '12.20', url: 'HttP://GOOGLE.eS', email: 'JOSEBA@gMaiL.com'}
-  var params = reg.validate(['id', {likes: 'int', url: ['url', 'toLower'], email: 'email'}]);
-  // params = {id: 1, likes: 12, url: 'http://google.es', email: 'joseba@gmail.com'}
-
-  // MORE EXAMPLES
-
-  // req.params.all() === {id: 1, likes: '12.20', url: 'http://google.es', email: 'JOSEBA@gMaiL.com'}
-  var params = reg.validate(['id', 'url', {likes: 'float', email: 'email'}]);
-  // params = {id: 1, likes: 12.20, url: 'http://google.es', email: 'joseba@gmail.com'}
-
-  // MORE
-
-  // req.params.all() === {id: 1, likes: 'hello', url: 'http://google.es', email: 'JOSEBA@gMaiL.com'}
-  var params = reg.validate(['id', {url: ['url', 'lower'], likes: 'float', email: 'email'}]);
-  // params === false and the client gets a res 400 - 'likes' has to be a float
-
-  // More examples
-
-  var param = reg.validate({color: ['hexcolor', 'upper']});
-
-  // More examples
-
-  // Optional values
-
-  var param = reg.validate('nickname?', {color: ['hexcolor', 'upper'], 'name?': 'toUpper'});
-
-  // If we have a nickname and/or a name parameters it will return it to the param var applying the rules
-  // If nickname or/and name are undefined in the request, it will ignore them and won't send 400
-
+```javascript
+var params = req.validate(['id', 'firstname', 'lastname']);  // lastname is an OPTIONAL field 
+// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
 ```
 
-##### Validation types (for now, maybe I will add more)
+
+
+<br>
+
+###Optional Parameter
+Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing except optional parameters.
+
+```javascript
+var params = req.validate(['id', 'firstname', 'lastname?']);  // lastname is an OPTIONAL field 
+// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
+```
+
+NOTE: For an optional parameter, just add `?` at the end of the passing parameter key.
+
+<br>
+###Multple Parameters with TYPE filters
+Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
+
+```javascript
+var params = req.validate([
+		{'id' : 'number'}
+		{'firstname' : 'string'}, 
+		{'lastname' : 'string'}
+		]);   
+// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
+```
+See [Validation Filters](#validation_filters) for more information.
+
+<br>
+###Multple Parameters with TYPE filters & CONVERTION filters
+Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
+
+```javascript
+var params = req.validate([
+		{'id' : 'number'}
+		{'firstname' : ['string', 'toUppercase']}, 
+		{'lastname' : ['string', 'toLowercase']}
+		]);   
+// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
+console.log(params);               // {id: 1234, firstname: "JOHN", lastname: "doe"}
+```
+NOTE: All CONVERTION filters start with `to`, for example: toUppercase, toBoolean.
+
+See [Validation Filters](#validation_filters) and [Conversion Filters](#conversion_filters) for more information.
+
+<br>
+###- Additional Example (Combining All Above Examples in One) 
+Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
+
+```javascript
+var params = req.validate([
+		{'id' : 'number'}                               // (required) 'id' param as NUMBER type
+		'phone?',                                       // (optional) 'phone' as ANY type
+		'website?' : 'url',                             // (optional) 'website' as URL type
+		{'firstname' : ['string', 'toUppercase']},      // (required) 'firstname' as STRING type and convert to UPPERCASE
+		{'department' : ['string', 'lowercase']}        // (required) 'department' as STRING type and must be LOWERCASE input
+		]);   
+```
+See [Validation Filters](#validation_filters) and [Conversion Filters](#conversion_filters) for more information.
+
+<br>
+###Disable Default Error Response  
+When the validation fails, `res.badRequest` will not be sent instead 'false' will be returned.
+
+```javascript
+var params = req.validate(['id', 'firstname', 'lastname'], false);  
+
+// when the validation fails, 'false' will be returned
+if (params) {
+	return res.badRequest('Invalid Parameters');
+} else {
+	console.log(params);		// {id: 1234, firstname: "John", lastname: "Doe"}
+}
+```
+NOTE: To disable the default error response, set `false` as the second passing variable.
+
+<br>
+###Custom Validation Callback 
+
+```javascript
+var params = req.validate(
+		['id', 'firstname', 'lastname'],
+		function(err, params) {
+			if (err) {
+				console.log(err);      // {message: 'some error message', invalid: ['id', 'firstname']} 
+			} else {
+				console.log(params);   // {id: 1234, firstname: "John", lastname: "doe"}
+			}
+		}
+	);  
+```
+NOTE: To set a custom callback, set function callback as the second passing variable.
+
+<br>
+###<a name="validation_filters"></a>Validation Filters
 
 ```javascript  
-  'email'
-  'toEmail'
-  'url'
-  'ip'
-  'alpha'
-  'numeric'
-  'base64'
-  'hex'
-  'hexColor'
-  'lower'
-  'toLower'
-  'upper'
-  'toUpper'
-  'string'
-  'boolean'
-  'toBoolean'
-  'int'
-  'float'
-  'date'
-  'toDate'
-  'json'
-  'ascii'
-  'mongoId'
-  'alphanumeric',
-  'creditCard'
+  email
+  url
+  ip
+  alpha
+  numeric
+  base64
+  hex
+  hexColor
+  lowercase
+  uppercase
+  string
+  boolean
+  int
+  float
+  date
+  json
+  ascii
+  mongoId
+  alphanumeric
+  creditCard
 ```
 
-#### Sails v0.10.X
+<br>
+###<a name="conversion_filters"></a>Conversion Filters
 
-To work with reg.validate() in v0.10 just clone this repo inside of api/hooks folder. <b>Not tested yet in v0.10!</b> But it should work with no problem...
-
-
-
-## Tests
-
-To test this hook, you need [mocha](https://github.com/mochajs/mocha) installed in your computer globally.
-
-```javascript
-npm install -g mocha // Just if you don't have mocha installed yet
-
-// And then just run mocha in the hook folder
-
-mocha
-
-// Optional: Change port or log level
-
-log=info port=1234 mocha
-
-// log level options = error, warn, info, verbose and silly. By default: warn
-// port by default: 1992
-
+```javascript  
+  toLowercase
+  toUppercase
+  toEmail
+  toBoolean
+  toDate
 ```
+  
+  
+  
+
+
+<br>
+#### Sails v0.10.x
+To work with reg.validate() in v0.10 just clone this repo inside of api/hooks folder.
