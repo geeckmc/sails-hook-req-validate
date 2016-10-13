@@ -26,18 +26,18 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 
 ```javascript
 var params = req.validate('id');
-// if the validation fails, "req.badRequest" will be called and will not continue to the next line.  
-console.log(params);                // {id: 1234}
+// if the validation fails, "req.badRequest" will be called and returns 'false'.  
+console.log(params);                // {id: 1234} OR false
+if (!params) { return; }
 ```
 <br>
 
 ```javascript
 var params = req.validate(['id', 'firstname', 'lastname']);  // lastname is an OPTIONAL field 
-// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
+// if the validation fails, "req.badRequest" will be called and returns 'false'.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+if (!params) { return; }
 ```
-
-
 
 <br>
 
@@ -46,8 +46,9 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 
 ```javascript
 var params = req.validate(['id', 'firstname', 'lastname?']);  // lastname is an OPTIONAL field 
-// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
+// if the validation fails, "req.badRequest" will be called and returns 'false'.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+if (!params) { return; }
 ```
 
 NOTE: For an optional parameter, just add `?` at the end of the passing parameter key.
@@ -63,8 +64,9 @@ var params = req.validate([
 		{'firstname' : 'string'}, 
 		{'lastname' : 'string'}
 		]);   
-// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"}
+// if the validation fails, "req.badRequest" will be called and returns 'false'.
+console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+if (!params) { return; }
 ```
 See [Validation Filters](#validation_filters) for more information.
 
@@ -79,8 +81,9 @@ var params = req.validate([
 		{'firstname' : ['string', 'toUppercase']}, 
 		{'lastname' : ['string', 'toLowercase']}
 		]);   
-// if the validation fails, "req.badRequest" will be called and will not continue to the next line.
-console.log(params);               // {id: 1234, firstname: "JOHN", lastname: "doe"}
+// if the validation fails, "req.badRequest" will be called and returns 'false'.
+console.log(params);               // {id: 1234, firstname: "JOHN", lastname: "doe"} OR false
+if (!params) { return; }
 ```
 NOTE: All CONVERTION filters start with `to`, for example: toUppercase, toBoolean.
 
@@ -99,6 +102,7 @@ var params = req.validate([
 		{'firstname' : ['string', 'toUppercase']},      // (required) 'firstname' as STRING type and convert to UPPERCASE
 		{'department' : ['string', 'lowercase']}        // (required) 'department' as STRING type and must be LOWERCASE input
 		]);   
+if (!params) { return; }
 ```
 See [Validation Filters](#validation_filters) and [Conversion Filters](#conversion_filters) for more information.
 
