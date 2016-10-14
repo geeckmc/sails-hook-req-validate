@@ -190,7 +190,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' id: somecrazyid, has to be int type.');
+      err.body.should.be.equal('id: somecrazyid, has to be int type.');
       return done();
     });
   });
@@ -209,7 +209,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' id: somecrazyid, has to be int type.');
+      err.body.should.be.equal('id: somecrazyid, has to be int type.');
       return done();
     });
   });
@@ -317,7 +317,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      var msg = ' age: 22a, has to be int type. height: 1,88, has to be float type.';
+      var msg = 'age: 22a, has to be int type. height: 1,88, has to be float type.';
       err.body.should.be.equal(msg);
       return done();
     });
@@ -338,7 +338,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      var msg = ' age: 22a, has to be int type. height: 1,88, has to be float type.';
+      var msg = 'age: 22a, has to be int type. height: 1,88, has to be float type.';
       err.body.should.be.equal(msg);
       return done();
     });
@@ -663,7 +663,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      var msg = ' height: 1,88, has to be float type. age: 22years, has to be int type.';
+      var msg = 'height: 1,88, has to be float type. age: 22years, has to be int type.';
       err.body.should.be.equal(msg);
       return done();
     });
@@ -683,7 +683,7 @@ describe('00 BehaviorController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      var msg = ' height: 1,88, has to be float type. age: 22years, has to be int type.';
+      var msg = 'height: 1,88, has to be float type. age: 22years, has to be int type.';
       err.body.should.be.equal(msg);
       return done();
     });
@@ -959,7 +959,7 @@ describe('00 BehaviorController Test', function(){
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(Object);
       err.body.message.should.be.instanceOf(String);
-      err.body.invalidParameters.should.be.instanceOf(Array);
+      err.body.invalid.should.be.instanceOf(Array);
       return done();
     });
   });

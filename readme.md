@@ -19,7 +19,16 @@ This project is originally forked from sails-hook-validator with following modif
 > * updated the filter names
 > * changed the error respond from `res.error(400, data)` to `res.badRequest(data)`
 
-<br>
+---
+###UPDATE
+0.2.0 : OR operation logic is added. 
+
+```javascript
+// 'numeric || string' or 'numeric|| string' are OK. Space will be ignored
+var param = req.validate({'id' : 'numeric||string'});     
+```
+
+---
 
 ###Simple Single & Multple Parameter(s)
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing.
@@ -60,7 +69,7 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 
 ```javascript
 var params = req.validate([
-		{'id' : 'number'}
+		{'id' : 'numeric'},
 		{'firstname' : 'string'}, 
 		{'lastname' : 'string'}
 		]);   
@@ -77,7 +86,7 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 
 ```javascript
 var params = req.validate([
-		{'id' : 'number'}
+		{'id' : 'numeric'},
 		{'firstname' : ['string', 'toUppercase']}, 
 		{'lastname' : ['string', 'toLowercase']}
 		]);   
@@ -96,9 +105,9 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 
 ```javascript
 var params = req.validate([
-		{'id' : 'number'}                               // (required) 'id' param as NUMBER type
+		{'id' : 'numeric'},                             // (required) 'id' param as NUMERIC type
 		'phone?',                                       // (optional) 'phone' as ANY type
-		'website?' : 'url',                             // (optional) 'website' as URL type
+		'website?': 'url',                              // (optional) 'website' as URL type
 		{'firstname' : ['string', 'toUppercase']},      // (required) 'firstname' as STRING type and convert to UPPERCASE
 		{'department' : ['string', 'lowercase']}        // (required) 'department' as STRING type and must be LOWERCASE input
 		]);   

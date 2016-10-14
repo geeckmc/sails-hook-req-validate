@@ -59,7 +59,7 @@ describe('02 FloatController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' height: 1.88m, has to be float type.');
+      err.body.should.be.equal('height: 1.88m, has to be float type.');
       return done();
     });
   });

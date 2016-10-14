@@ -71,7 +71,7 @@ describe('06 AlphanumericController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' alpha: htttp://badurl.com, has to be alphanumeric type.');
+      err.body.should.be.equal('alpha: htttp://badurl.com, has to be alphanumeric type.');
       return done();
     });
   });
@@ -84,7 +84,7 @@ describe('06 AlphanumericController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' alpha: notvalidemail@gmail.com, has to be alphanumeric type.');
+      err.body.should.be.equal('alpha: notvalidemail@gmail.com, has to be alphanumeric type.');
       return done();
     });
   });

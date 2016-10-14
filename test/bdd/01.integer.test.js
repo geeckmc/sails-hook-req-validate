@@ -47,7 +47,7 @@ describe('01 IntegerController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' id: 1.1, has to be int type.');
+      err.body.should.be.equal('id: 1.1, has to be int type.');
       return done();
     });
   });
@@ -60,7 +60,7 @@ describe('01 IntegerController Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' id: 1notvalid, has to be int type.');
+      err.body.should.be.equal('id: 1notvalid, has to be int type.');
       return done();
     });
   });

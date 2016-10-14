@@ -153,6 +153,46 @@ module.exports = {
       if(err) return res.badRequest(err);
       return res.ok(params);
     });
+  },
+
+  orErrorObject: function(req, res){
+    var filter = [
+      {'usernameOrEmail': 'string||email'}
+    ];
+    req.validate(filter, false, function(err, params){
+      if(err) return res.badRequest(err.message);
+      return res.ok(params);
+    });
+  },
+
+  orErrorConversionObject: function(req, res){
+    var filter = [
+      {'usernameOrEmail': ['string||email', 'toUppercase']}
+    ];
+    req.validate(filter, false, function(err, params){
+      if(err) return res.badRequest(err.message);
+      return res.ok(params);
+    });
+  },
+
+  orErrorOptionalObject: function(req, res){
+    var filter = [
+      {'usernameOrEmail?': 'string||email'}
+    ];
+    req.validate(filter, false, function(err, params){
+      if(err) return res.badRequest(err.message);
+      return res.ok(params);
+    });
+  },
+
+  orErrorNumEmailObject: function(req, res){
+    var filter = [
+      {'numberOrEmail': 'numeric||email'}
+    ];
+    req.validate(filter, false, function(err, params){
+      if(err) return res.badRequest(err.message);
+      return res.ok(params);
+    });
   }
 
 };

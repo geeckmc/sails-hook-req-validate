@@ -27,6 +27,12 @@ module.exports = {
   'post /complex-no-default-error-async': controllers.behavior.complexNoErrorResponseAsync,
   'post /complete-error-object': controllers.behavior.completeErrorObject,
 
+  'post /or-error': controllers.behavior.orErrorObject,
+  'post /or-error-conversion': controllers.behavior.orErrorConversionObject,
+  'post /or-error-optional': controllers.behavior.orErrorOptionalObject,
+  'post /or-number-email': controllers.behavior.orErrorNumEmailObject,
+
+
   /* Integer */
   'post /integer': controllers.integer,
 

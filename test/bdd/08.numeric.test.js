@@ -47,7 +47,7 @@ describe('06 Numeric Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' numeric: htttp://badurl.com, has to be numeric type.');
+      err.body.should.be.equal('numeric: htttp://badurl.com, has to be numeric type.');
       return done();
     });
   });
@@ -60,7 +60,7 @@ describe('06 Numeric Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' numeric: 12311a, has to be numeric type.');
+      err.body.should.be.equal('numeric: 12311a, has to be numeric type.');
       return done();
     });
   });
@@ -73,7 +73,7 @@ describe('06 Numeric Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' numeric: 1,1, has to be numeric type.');
+      err.body.should.be.equal('numeric: 1,1, has to be numeric type.');
       return done();
     });
   });
@@ -86,7 +86,7 @@ describe('06 Numeric Test', function(){
       err.should.be.instanceOf(Object);
       err.status.should.be.equal(400);
       err.body.should.be.instanceOf(String);
-      err.body.should.be.equal(' numeric: 1.1, has to be numeric type.');
+      err.body.should.be.equal('numeric: 1.1, has to be numeric type.');
       return done();
     });
   });
