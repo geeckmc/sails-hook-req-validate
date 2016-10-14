@@ -115,7 +115,7 @@ When the validation fails, `res.badRequest` will not be sent instead 'false' wil
 var params = req.validate(['id', 'firstname', 'lastname'], false);  
 
 // when the validation fails, 'false' will be returned
-if (params) {
+if (!params) {
 	return res.badRequest('Invalid Parameters');
 } else {
 	console.log(params);		// {id: 1234, firstname: "John", lastname: "Doe"}
