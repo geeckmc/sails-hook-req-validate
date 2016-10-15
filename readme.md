@@ -30,13 +30,27 @@ var param = req.validate({'id' : 'numeric||string'});
 
 ---
 
+###[NEW] OR Operation
+OR `||` operarion is a new addition to 0.2.x version. It can be applied to either *required* or *optional* parameter.
+```javascript
+var params = req.validate(
+                {'id': 'string || numeric'},   // 'numeric || string' or 'numeric|| string' are OK. Space will be ignored
+                {'usernameOrEmail': 'string || numeric || email'}
+              );
+// if the validation fails, "req.badRequest" will be called and returns 'false'.  
+console.log(params);                // {id: '1234', usernameOrEmail: 'user001'} OR false
+if (!params) { return; }
+```
+
+<br>
+
 ###Simple Single & Multple Parameter(s)
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing.
 
 ```javascript
 var params = req.validate('id');
 // if the validation fails, "req.badRequest" will be called and returns 'false'.  
-console.log(params);                // {id: 1234} OR false
+console.log(params);                // {id: '1234'} OR false
 if (!params) { return; }
 ```
 <br>
@@ -44,7 +58,7 @@ if (!params) { return; }
 ```javascript
 var params = req.validate(['id', 'firstname', 'lastname']);  // lastname is an OPTIONAL field 
 // if the validation fails, "req.badRequest" will be called and returns 'false'.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+console.log(params);               // {id: '1234', firstname: "John", lastname: "Doe"} OR false
 if (!params) { return; }
 ```
 
@@ -56,7 +70,7 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 ```javascript
 var params = req.validate(['id', 'firstname', 'lastname?']);  // lastname is an OPTIONAL field 
 // if the validation fails, "req.badRequest" will be called and returns 'false'.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+console.log(params);               // {id: '1234', firstname: "John", lastname: "Doe"} OR false
 if (!params) { return; }
 ```
 
@@ -74,7 +88,7 @@ var params = req.validate([
 		{'lastname' : 'string'}
 		]);   
 // if the validation fails, "req.badRequest" will be called and returns 'false'.
-console.log(params);               // {id: 1234, firstname: "John", lastname: "Doe"} OR false
+console.log(params);               // {id: '1234', firstname: "John", lastname: "Doe"} OR false
 if (!params) { return; }
 ```
 See [Validation Filters](#validation_filters) for more information.
@@ -91,7 +105,7 @@ var params = req.validate([
 		{'lastname' : ['string', 'toLowercase']}
 		]);   
 // if the validation fails, "req.badRequest" will be called and returns 'false'.
-console.log(params);               // {id: 1234, firstname: "JOHN", lastname: "doe"} OR false
+console.log(params);               // {id: '1234', firstname: "JOHN", lastname: "doe"} OR false
 if (!params) { return; }
 ```
 NOTE: All CONVERTION filters start with `to`, for example: toUppercase, toBoolean.
@@ -107,7 +121,7 @@ Validates `req.params` for expecting parameter keys and returns `req.badRequest`
 var params = req.validate([
 		{'id' : 'numeric'},                             // (required) 'id' param as NUMERIC type
 		'phone?',                                       // (optional) 'phone' as ANY type
-		'website?': 'url',                              // (optional) 'website' as URL type
+		{'website?': 'url'},                              // (optional) 'website' as URL type
 		{'firstname' : ['string', 'toUppercase']},      // (required) 'firstname' as STRING type and convert to UPPERCASE
 		{'department' : ['string', 'lowercase']}        // (required) 'department' as STRING type and must be LOWERCASE input
 		]);   
@@ -127,7 +141,7 @@ var params = req.validate(['id', 'firstname', 'lastname'], false);
 if (!params) {
 	return res.badRequest('Invalid Parameters');
 } else {
-	console.log(params);		// {id: 1234, firstname: "John", lastname: "Doe"}
+	console.log(params);		// {id: '1234', firstname: "John", lastname: "Doe"}
 }
 ```
 NOTE: To disable the default error response, set `false` as the second passing variable.
@@ -143,7 +157,7 @@ var params = req.validate(
 			if (err) {
 				console.log(err);      // {message: 'some error message', invalid: ['id', 'firstname']} 
 			} else {
-				console.log(params);   // {id: 1234, firstname: "John", lastname: "doe"}
+				console.log(params);   // {id: '1234', firstname: "John", lastname: "doe"}
 			}
 		}
 	);  
