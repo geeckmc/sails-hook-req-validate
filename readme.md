@@ -8,9 +8,9 @@ Sails hook for overwrite req.validate request.
   npm install sails-hook-req-validate --save 
 ```
 
-###req.validate();
+### req.validate();
 
-> #####Requirements:
+> ##### Requirements:
 Sails v0.11.X and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
 This project is originally forked from sails-hook-validator with following modifications:
 
@@ -20,7 +20,7 @@ This project is originally forked from sails-hook-validator with following modif
 > * changed the error respond from `res.error(400, data)` to `res.badRequest(data)`
 
 ---
-###UPDATE
+### UPDATE
 0.2.0 : OR operation logic is added. 
 
 ```javascript
@@ -30,7 +30,7 @@ var param = req.validate({'id' : 'numeric||string'});
 
 ---
 
-###[NEW] OR Operation
+### [NEW] OR Operation
 OR `||` operarion is a new addition to 0.2.x version. It can be applied to either *required* or *optional* parameter.
 ```javascript
 var params = req.validate(
@@ -44,7 +44,7 @@ if (!params) { return; }
 
 <br>
 
-###Simple Single & Multple Parameter(s)
+### Simple Single & Multple Parameter(s)
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing.
 
 ```javascript
@@ -64,7 +64,7 @@ if (!params) { return; }
 
 <br>
 
-###Optional Parameter
+### Optional Parameter
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any parameter key is missing except optional parameters.
 
 ```javascript
@@ -78,7 +78,7 @@ NOTE: For an optional parameter, just add `?` at the end of the passing paramete
 
 <br>
 
-###Multple Parameters with TYPE filters
+### Multple Parameters with TYPE filters
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
 ```javascript
@@ -95,7 +95,7 @@ See [Validation Filters](#validation_filters) for more information.
 
 <br>
 
-###Multple Parameters with TYPE filters & CONVERTION filters
+### Multple Parameters with TYPE filters & CONVERTION filters
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
 ```javascript
@@ -114,7 +114,7 @@ See [Validation Filters](#validation_filters) and [Conversion Filters](#conversi
 
 <br>
 
-###- Additional Example (Combining All Above Examples in One) 
+### - Additional Example (Combining All Above Examples in One) 
 Validates `req.params` for expecting parameter keys and returns `req.badRequest` (400 status code) if any missing parameter key.
 
 ```javascript
@@ -131,7 +131,7 @@ See [Validation Filters](#validation_filters) and [Conversion Filters](#conversi
 
 <br>
 
-###Disable Default Error Response  
+### Disable Default Error Response  
 When the validation fails, `res.badRequest` will not be sent instead 'false' will be returned.
 
 ```javascript
@@ -148,7 +148,7 @@ NOTE: To disable the default error response, set `false` as the second passing v
 
 <br>
 
-###Custom Validation Callback 
+### Custom Validation Callback 
 
 ```javascript
 var params = req.validate(
@@ -166,7 +166,7 @@ NOTE: To set a custom callback, set function callback as the second passing vari
 
 <br>
 
-###<a name="validation_filters"></a>Validation Filters
+### <a name="validation_filters"></a>Validation Filters
 
 ```javascript  
   email
@@ -193,7 +193,7 @@ NOTE: To set a custom callback, set function callback as the second passing vari
 
 <br>
 
-###<a name="conversion_filters"></a>Conversion Filters
+### <a name="conversion_filters"></a>Conversion Filters
 
 ```javascript  
   toLowercase
