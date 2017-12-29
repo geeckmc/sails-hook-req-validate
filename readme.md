@@ -11,13 +11,18 @@ Sails hook for overwrite req.validate request.
 ### req.validate();
 
 > ##### Requirements:
-Sails v0.11.X and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
+Sails v1.0.0 and lodash enabled as global (by default it comes enabled). For v0.10.X see below.
 This project is originally forked from sails-hook-validator with following modifications:
 
 > * rather then creating a new validation function, it overwrites the existing `req.validate` function
 > * changed the optional field marker `?` to be the surffix (ex: name?)
 > * updated the filter names
 > * changed the error respond from `res.error(400, data)` to `res.badRequest(data)`
+
+---
+### UPDATE
+1.0.0 : Sails V1.0.0 support.
+
 
 ---
 ### UPDATE

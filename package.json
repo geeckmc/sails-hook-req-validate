@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-req-validate",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Validations in Sailsjs requests",
   "keywords": [
     "sails-hook",
@@ -21,9 +21,9 @@
     "validator": "^3.26.0"
   },
   "devDependencies": {
-    "sails": "^0.12.7",
-    "should": "^11.1.1",
-    "mocha": "^3.1.2"
+    "sails": ">=1.0.0",
+    "should": "*",
+    "mocha": "*"
   },
   "main": "index.js",
   "repository": {
